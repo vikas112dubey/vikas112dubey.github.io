@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<title>PROJECT-EMPLOYEE</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="angular.min.js"></script>
+<script src="allScript.js"></script>
+
+<style>
+  .row.content {height: 620px}
+  .sidenav {
+    background-color: #f1f1f1;
+    height: 100%;
+  }
+  .nav>.projectHeading{
+   background-color: grey;
+   color: white;
+   padding: 10px;
+   font-family: aeral;
+ }
+ .employeeHeading{
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: grey;
+  color: white;
+  font-family: aeral;
+}
+.employeeHeading a{
+  color: yellow;
+  float: right;
+  cursor: pointer;
+}
+.nav>li>a.projectNameList:hover{
+  background-color:  #75ACD9;
+  color: #fff;
+}
+.nav>li.selected>a{
+  background-color: #337ab7;
+  color: #fff;
+}
+.buttonSection button{
+  width: 45%
+}
+.AddProjectForm{
+  padding: 10px;
+}
+.AddProjectForm div{
+ padding: 5px;
+}
+.AddProjectForm input{
+  float: right;
+}
+.AddProjectForm button{
+ position: absolute;
+ left: 29%;
+ margin: 5px;
+ width: 45%;
+}
+</style>
+</head>
+
+<body ng-app="projectEmployeePortal" ng-controller="mainController">
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav hidden-xs">
+        <h2>Project-Employee</h2>
+        <ul class="nav nav-pills nav-stacked">
+          <li class="projectHeading">PROJECTS</li>
+          <li  ng-repeat="item in projectList" ng-click="selectProject($event,item)"><a class="projectNameList">{{item.name}}</a></li>
+        </ul><br>
+        <div class="buttonSection">
+          <input type="checkbox" ng-model="addProjectFlag"><label>Add Projects</label>
+          <input type="checkbox"><label>Add Employee</label>
+        </div>
+        <div class="AddProjectForm" ng-show="addProjectFlag">
+          <div ><label>NAME - </label><input type="text" value="name" ng-model="project.name"></div>
+          <div ><label>Description- </label><input type="text" value="Desc" ng-model="project.description"></div>
+          <div ><label>Skills - </label> <input type="text" value="Skills" ng-model="project.skills"></div>
+          <button ng-click="addProject()"> Submit</button></div>
+        </div>
+        <br>
+
+        <div class="col-sm-9">
+          <div class="well">
+            <h4>Project Details</h4>
+            <p>Name - {{selectedProject.name}}</p>
+            <p>Description - {{selectedProject.description}}</p>
+          </div>
+          <div class="employeeHeading">AVAILABLE-EMPLOYESS <a ng-click="showAllEmployee()"> SHOW-ALL</a></div>
+          <div class="row">
+            <div class="col-sm-3" ng-repeat="employee in employeeList| filter:selectedProject.skillsReq:true:skills">
+              <div class="well">
+                <p>Employee Name - {{employee.name}}</p>
+                <p>Skills - {{employee.skills}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
